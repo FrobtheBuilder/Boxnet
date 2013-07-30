@@ -1,0 +1,13 @@
+.stage
+{
+	width: 500px;
+	margin: auto;
+	text-align: center;
+}
+
+.box
+{
+	background-image: url("../img/box.png");
+	height: 500px;
+	cursor: pointer;
+}
