@@ -8,6 +8,7 @@
 		public $desc;
 		public $value;
 		public $nsfw;
+        public $db;
 
 		function __construct($pname = "default", $pimage = "default.jpg", 
 								$pdesc = "this is a default object", $pvalue = 1, $pnsfw = false) {
@@ -17,11 +18,25 @@
 			$this->value = $pvalue;
 			$this->nsfw = $pnsfw;
 		}
+        
+        function connect() {
+            $this->db = new mysqli("localhost", "boxnet", "whatsinside", "boxnet" );
+            return var_dump($this->db);
+        }
+        
+        function populate($pmethod = "random") {
+            switch ($pmethod) {
+                case "random":
+                    
+                    break;
+            }
+        }
 
 	}
 
 
 
 	$defaultitem = new Item();
+    echo $defaultitem->connect();
 	echo json_encode($defaultitem, JSON_NUMERIC_CHECK);
 ?>
