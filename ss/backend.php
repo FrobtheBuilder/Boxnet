@@ -20,7 +20,7 @@
 		}
         
         function connect() {
-            $this->db = new mysqli("localhost", "boxnet", "whatsinside", "boxnet" );
+            $this->db = new mysqli("reda.genderal.org", "boxnet", "whatsinside", "boxnet" );
             return var_dump($this->db);
         }
         
