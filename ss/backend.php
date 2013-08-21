@@ -1,4 +1,5 @@
 <?php
+    require "auth.php";
 	header("Content-Type: application/json");
 
 	class Item {
@@ -20,7 +21,7 @@
 		}
         
         function connect() {
-            $this->db = new mysqli("localhost", "boxnet", "whatsinside", "boxnet" );
+            $this->db = new mysqli("localhost", $user["name"], $user["password"], "boxnet" );
             return var_dump($this->db);
         }
         
