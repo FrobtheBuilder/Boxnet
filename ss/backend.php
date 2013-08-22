@@ -22,6 +22,7 @@
         
         function connect() {
             $this->db = new mysqli("localhost", $user["name"], $user["password"], "boxnet" );
+            $this->db = new mysqli("reda.genderal.org", "boxnet", "whatsinside", "boxnet" );
             return var_dump($this->db);
         }
         
@@ -41,3 +42,4 @@
     echo $defaultitem->connect();
 	echo json_encode($defaultitem, JSON_NUMERIC_CHECK);
 ?>
+
