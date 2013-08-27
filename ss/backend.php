@@ -1,6 +1,7 @@
 <?php
     require "auth.php";
-	header("Content-Type: application/json");
+    header("Content-Type: application/json");
+
 	class Item {
 
 		public $name;
@@ -19,35 +20,6 @@
 			$this->nsfw = $pnsfw;
 		}
         
-        function connect() {
-            global $user;
-            $this->db = new mysqli($user["host"], $user["name"], $user["password"], $user["database"] );
-        }
-        
-        function populate($pmethod = "random") {
-            
-            if (!isset($this->db)) {
-                $this->connect();
-            }
-            
-            $result = $this->db->query("select count(*) from items;");
-            $rowcount = (int) $result->fetch_assoc()['count(*)'];
-            $result->close();
-            
-            switch ($pmethod) {
-                case "random":
-                    $randrow = rand(1, $rowcount);
-                    
-                    $result = $this->db->query("select * from items where id=$randrow;");
-                    $resultobject = $result->fetch_object();
-                    $result->close();
-                    
-                    $this->set($resultobject);
-                    
-                    break;
-            }
-        }
-        
         function set($pobject) {
 			$this->name = $pobject->name;
 			$this->image = $pobject->image;
@@ -57,10 +29,32 @@
 		}
 	}
 
+    function connectdb() {
+        global $user;
+        $db = new mysqli($user["host"], $user["name"], $user["password"], $user["database"] );
+        return $db;
+    }
 
+    function populate($pitem, $pdb, $pmethod) {
+        $result = $pdb->query("select count(*) from items;");
+        $rowcount = (int) $result->fetch_assoc()['count(*)'];
+        $result->close();
+            
+        switch ($pmethod) {
+            case "random":
+                $randrow = rand(1, $rowcount);
+                    
+                $result = $pdb->query("select * from items where id=$randrow;");
+                $resultobject = $result->fetch_object();
+                $result->close();
+                    
+                $pitem->set($resultobject);
+                
+                break;
+        }
+        return $pitem;
+    }
 
-	$defaultitem = new Item();
-    $defaultitem->populate("random");
-	echo json_encode($defaultitem);
+    $returnitem = populate(new Item(), connectdb(), "random");
+	echo json_encode($returnitem);
 ?>
-
