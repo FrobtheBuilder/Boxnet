@@ -2,7 +2,7 @@ var item = function (pname, pimage, pdesc, pvalue, pnsfw) {
 
 	thisitem = this;
 
-	if (pname && pname != "") {
+	if (pname && pname !== "") {
 		this.name = pname;
 		this.image = pimage;
 		this.desc = pdesc;
