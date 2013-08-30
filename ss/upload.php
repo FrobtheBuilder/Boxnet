@@ -60,7 +60,7 @@
         $item = new Item($_POST['name'], $_FILES['image']['name'], $_POST['desc'], $_POST['value'], (isset($_POST['nsfw']) && $_POST['nsfw']=="on") ? 1 : 0 );
         var_dump($item);
         echo "<br>";
-        var_dump(write($item, connectdb(), "add"));
+        (write($item, connectdb(), "add")) ? echo "Query Successful" : echo "Error in Query";
     }
     
 ?>
