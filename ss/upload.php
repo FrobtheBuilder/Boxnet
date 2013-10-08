@@ -12,10 +12,18 @@
     }
     echo "<br><br>";
 
-    function saveimage($pimage, $ppath) {
+    /**
+     * Saves an image to a folder
+     * 
+     * @return boolean true on success, false on fail
+     * @param image $pimage the image 
+     * @param string $ppath the path to the folder, don't forget the trailing slash
+     */ 
+    function saveimage($pname, $pimage, $ppath) {
         $allowedExts = array("gif", "jpeg", "jpg", "png");
         $temp = explode(".", $pimage["name"]);
         $extension = end($temp);
+        $filename = $pname . "." . $extension;
         if ((($pimage["type"] == "image/gif")
             || ($pimage["type"] == "image/jpeg")
             || ($pimage["type"] == "image/jpg")
@@ -40,8 +48,8 @@
                     return false;
                 }
                 else {
-                    move_uploaded_file($pimage["tmp_name"], $ppath . $pimage["name"]);
-                    echo "Stored in: " . $ppath . $pimage["name"];
+                    move_uploaded_file($pimage["tmp_name"], $ppath . $filename);
+                    echo "Stored in: " . $ppath . $filename;
                     return true;
                 }
             }
@@ -56,8 +64,30 @@
         }
     }
     
-    if (saveimage($_FILES['image'], "../assets/img/item/")) {
-        $item = new Item($_POST['name'], $_FILES['image']['name'], $_POST['desc'], $_POST['value'], (isset($_POST['nsfw']) && $_POST['nsfw']=="on") ? 1 : 0 );
+    
+    function checkinput($ptarget) {
+        $retval = true;
+        /*
+        if ( gettype($ptarget['value']) != "integer" ) {
+            $retval = false;
+            echo "<b>rarity isn't an integer!</b>";
+        }*/
+        if ( strlen($ptarget['name']) > 20 || strlen($ptarget["desc"]) > 500 ) {
+            $retval = false;
+            echo "<b>Name longer than 20 characters or description longer than 500 characters!</b>";
+        }
+        return $retval;
+    }
+    
+    
+    if (saveimage($_POST['name'], $_FILES['image'], "../assets/img/item/") && checkinput($_POST)) {
+        
+        $item = new Item($_POST['name'], 
+                            $_POST['name'] . "." . end(explode(".", $_FILES['image']['name'])), 
+                            $_POST['desc'], 
+                            $_POST['value'], 
+                            (isset($_POST['nsfw']) && $_POST['nsfw']=="on") ? 1 : 0 );
+                            
         var_dump($item);
         echo "<br> <br>";
         if (write($item, connectdb(), "add")) {
@@ -67,5 +97,6 @@
             echo "Error in Query";
         }
     }
+    echo '<br> <br> <a href="../index.html">Return</a>';
     
 ?>

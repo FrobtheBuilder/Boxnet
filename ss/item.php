@@ -24,5 +24,11 @@
 			$this->value = $pobject->value;
 			$this->nsfw = $pobject->nsfw;
 		}
+		
+		function escape($pdb) {
+		    $this->name = $pdb->escape_string($this->name);
+			$this->image = $pdb->escape_string($this->image);
+			$this->desc = $pdb->escape_string($this->desc);
+		}
 	}
 ?>

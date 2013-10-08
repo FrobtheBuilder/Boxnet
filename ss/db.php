@@ -64,10 +64,11 @@
     function write($pitem, $pdb, $pmethod) {
         switch ($pmethod) {
             case "add":
-                echo "insert into `items`(`name`, `image`, `desc`, `value`, `nsfw`) 
+                $pitem->escape($pdb);
+                $query = "insert into `items`(`name`, `image`, `desc`, `value`, `nsfw`) 
                                 values ('$pitem->name', '$pitem->image', '$pitem->desc', $pitem->value, $pitem->nsfw)";
-                return $pdb->query("insert into `items`(`name`, `image`, `desc`, `value`, `nsfw`) 
-                                values ('$pitem->name', '$pitem->image', '$pitem->desc', $pitem->value, $pitem->nsfw)");
+                echo $query;
+                return $pdb->query($query);
 
                 break;
         }
