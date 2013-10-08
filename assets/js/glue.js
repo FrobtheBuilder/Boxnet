@@ -1,7 +1,12 @@
-$(document).ready(function () {
-	$(".box").click(function () {
-		process();
-	});
+$(document).ready(function() {
+    $(".box").click(function() {
+        if ($(".sfw").attr("checked")) {
+            process(false);
+        }
+        else {
+            process(true);
+        }
+    });
 })
 
 function display (pitem, pelement) {
