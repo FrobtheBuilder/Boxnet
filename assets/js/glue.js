@@ -12,7 +12,7 @@ $(document).ready(function() {
 function display (pitem, pelement) {
 	pelement.html("");
 	pelement.append(
-		$("<div></div>").attr("class", "item").append(
+		$("<div></div>").attr("class", "panel").append(
 			$("<img>").attr("class", "image img-rounded").attr("src", imagepath + pitem.image),
 			$("<br>"),
 			$("<h1></h1>").html(pitem.name),
