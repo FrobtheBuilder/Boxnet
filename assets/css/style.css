@@ -20,9 +20,12 @@
 
 .item
 {
-    padding: 20px 10px 20px 10px;
-    border: solid #E0E0E0 1px;
-    border-radius: 4px;
+
+}
+
+.image
+{
+    width: 100%;
 }
 
 .return
@@ -30,5 +33,5 @@
     display: block;
     float: right;
     position: relative;
-    top: -12px;
+    top: -20px;
 }
